@@ -11,8 +11,6 @@ Description
 -----------
 We have identified that the Switchvox (Version 102409) is affected by an information disclosure vulnerability due to an improper access restriction. We have managed to extract users information such as first name, last name, acount id, server uuid, email address, profile image, number, timestamps, etc by sending unauthenticated HTTP GET request to the "https://Switchvox-IP/main?cmd=invalid_browser". 
 
-The URL was crafted by analyzing the "https://Switchvox-IP/javascript/common/switchvox/util/browserChecker.js?v=102409" JS file's source code. 
-
 The server replies to the unauthenticated request with an "Error Encountered" Web Page for the user "undefined".
 
 The sensitive information is stored in a JS variable named "qJSON" in the web page's source code.
